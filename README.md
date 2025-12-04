@@ -1,103 +1,123 @@
 # blind-source-separation
 
 ## Project Overview
-This project focuses on Blind Source Separation (BSS) for communication systems. Three Independent Component Analysis (ICA) algorithms — SOBI, FastICA, and AMUSE — were evaluated using MATLAB to determine the most efficient approach for separating mixed radio signals corrupted by noise and interference.
 
-Based on benchmarking results (correlation & execution time), SOBI was selected for real-time implementation on GNU Radio using Python, demonstrating practical applicability for Software-Defined Radio (SDR) systems.
+This project implements Blind Source Separation (BSS) techniques to separate mixed communication signals from interference and noise.
+
+Two major stages were developed:
+
+1- MATLAB Simulation:
+
+Comparing three ICA algorithms for accuracy + computation time:
+  - FastICA
+  - SOBI
+  - AMUSE
+
+2- Practical SDR Implementation:
+The selected algorithm (SOBI) was implemented on GNU Radio using Python blocks, with real-time signal separation tests:
+  - Clean signals
+  - Noisy signals (with / without filtering)
+  - Single-signal vs noise separation
 
 
 ## Motivation
-In modern wireless communications, received signals are often corrupted or mixed with other signals. BSS provides a robust solution without prior knowledge of the sources or the mixing process. This improves:
-  - Communication quality
-  - Signal recovery accuracy
-  - Error rate reduction
-  - SDR flexibility for dynamic environments
-
-
-## Methods & System Architecture
-
-1- Simulation in MATLAB:
-  - Generated synthetic signal mixtures (sin, square, sawtooth)
-  - Two scenarios tested:
-      - Clean signals
-      - Noisy signals under varying SNR ∈ [-20 dB → 20 dB]
-  - Monte-Carlo evaluation across 1000 iterations
-  - Algorithms compared using:
-      - Correlation coefficient (signal recovery quality)
-      - Execution time (computational efficiency)
-
-2- Real Implementation in GNU Radio:
-- SOBI executed on live mixed signals
-- Real-time correlation calculated
-- Three experiments:
-      - Clean signals
-      - Noisy signals
-      - Noise separation (AWGN suppression)
-
+Blind source separation plays an important role in communication systems, biomedical signal processing, and audio enhancement. This work demonstrates the efficiency of ICA techniques in extracting independent components from mixed observations, even in noisy environments.
 
 ## Technologies Used
+| Category | Details |
+|---------|---------|
+| Programming Language | MATLAB |
+| Algorithms | FastICA, AMUSE, SOBI |
+| Evaluation Metrics | Correlation coefficient, Execution time |
+| Experiment Type | Synthetic signals with varying SNR levels |
 
-| Category | Tools / Frameworks |
-|---------|-------------------|
-| Simulation | MATLAB (R2021a) |
-| Practical SDR Implementation | GNU Radio (Python-based) |
-| Programming Languages | MATLAB, Python |
-| Hardware Target | Software-Defined Radio (SDR) compatible |
+## Key Results
+| Algorithm | Correlation Performance | Execution Time | Best Use Case |
+|----------|------------------------|----------------|---------------|
+| **SOBI** | ⭐ Highest accuracy (best correlation across SNRs) | Medium | Signals with temporal structure |
+| **AMUSE** | Good accuracy | ⭐ Fastest | Low-latency processing |
+| **FastICA** | Moderate accuracy | Slowest | Highly independent sources |
 
-
-
-## Key Results Summary
-
-| Scenario | Best Algorithm | Criteria | Notes |
-|---------|----------------|---------|------|
-| 3 signals, no noise | AMUSE | Fastest execution | Correlation close to 1 |
-| 5 signals, no noise | AMUSE | Best accuracy | Very high correlation |
-| Low SNR (high noise) | SOBI | Most stable | Robust correlation results |
-| Increasing number of sources | SOBI | Most scalable | Minimal performance degradation |
-| Practical SDR (GNU Radio) | SOBI | Best overall | Selected for deployment |
-
-With Noise (SNR variation):
-- SOBI outperformed others especially at low SNR
-- Maintained stable execution time
-- Most practical for communication environments
-
-Conclusion: SOBI provides the best balance of accuracy + speed + stability → selected for SDR implementation.
+- SOBI provides the **best signal recovery**
+- AMUSE is the **fastest algorithm**  
+- ICA works reliably even with **added Gaussian noise**
 
 
 ## Repository Structure
 
-blind-source-separation-ica/
+bss-ica-gnu-radio/
 │
 ├── matlab_simulation/
-│   ├── fastica/
-│   ├── sobi/
-│   ├── amuse/
-│   └── results/
+│   ├── scripts/
+│   │   ├── fastica_sim.m
+│   │   ├── sobi_sim.m
+│   │   ├── amuse_sim.m
+│   │   └── utils/ (correlation, SNR, mixing, etc.)
+│   ├── plots/ (correlation graphs, timing charts)
+│   └── README.md  <-- short note for running MATLAB scripts
 │
-├── gnu_radio_implementation/
-│   ├── sobi_block.py
-│   ├── correlation_block.py
-│   └── flowgraphs/
+├── gnu_radio/
+│   ├── experiment_1_clean_signals/
+│   │   ├── sobi_block.py
+│   │   ├── correlation_block.py
+│   │   └── flowgraph.png
+│   │
+│   ├── experiment_2_noisy_signals/
+│   │   ├── without_filter/
+│   │   │   ├── sobi_block.py
+│   │   │   ├── correlation_block.py
+│   │   │   └── flowgraph.png
+│   │   └── with_filter/
+│   │       ├── sobi_block.py
+│   │       ├── correlation_block.py
+│   │       └── flowgraph.png
+│   │
+│   ├── experiment_3_signal_vs_noise/
+│   │   ├── without_filter/
+│   │   │   ├── sobi_block.py
+│   │   │   └── flowgraph.png
+│   │   └── with_filter/
+│   │       ├── sobi_block.py
+│   │       └── flowgraph.png
 │
-├── docs/
-│   ├── block_diagram.png
-│   ├── sdr_architecture.png
-│   └── algorithm_comparison_plots/
 │
-├── data/
-│   └── sample_signals/
-│
-├── requirements.txt
+├── LICENSE
 └── README.md
 
+## How to Run MATLAB Simulations
+Open MATLAB → run desired script in matlab_simulation/scripts/
 
-## How to Run
-SOBI in GNU Radio
+Results are saved automatically (correlation + execution time).
 
-1- Install dependencies
-    pip install -r requirements.txt
+## How to Run GNU Radio Experiments
+Open .grc files in GNU Radio Companion
 
-2- Open GNU Radio and load the flowgraph:
-    gnu_radio/flowgraphs/sobi_separation.grc
+Connect Python blocks
 
-3- Start the flow — view separated signals and correlation results in real time
+Execute flowgraph
+
+Correlation values will appear inside GNU Radio as live output.
+
+
+## Publications & Documentation
+
+Full research report (Arabic PDF):
+🔗 https://drive.google.com/file/d/1_SUB_-elds2g_sSnEgMkjOzltCwgjL4D/view
+
+
+## Skills Demonstrated
+
+- Blind Source Separation (ICA methods)
+- DSP for wireless systems
+- GNU Radio SDR implementation
+- Experimental design + performance analytics
+- Python + MATLAB development
+
+
+## Author
+
+Albatoul Ahmad
+
+Telecom Engineer | Wireless & Signal Processing
+
+📩 batoulahmad292@gmail.com
