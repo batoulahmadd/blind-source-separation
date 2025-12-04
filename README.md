@@ -50,37 +50,50 @@ bss-ica-gnu-radio/
 │
 ├── matlab_simulation/
 │   ├── scripts/
-│   │   ├── fastica_sim.m
-│   │   ├── sobi_sim.m
-│   │   ├── amuse_sim.m
-│   │   └── utils/ (correlation, SNR, mixing, etc.)
-│   ├── plots/ (correlation graphs, timing charts)
-│   └── README.md  <-- short note for running MATLAB scripts
+│   │   ├── fastICA.m
+│   │   ├── sobi.m
+│   │   ├── amuse.m
+│   │   ├── whitened_rows.m
+│   │   ├── centered_rows.m
+│   │   ├── ICA_three_signals_conversion.m
+│   │   ├── ICA_five_signals_fairNoise.m
+│   │   └── ICA_single_signal_noisy.m
+│   │
+│   ├── plots/
+│   │   ├── correlation_three_ICA_algorithms.png
+│   │   ├── correlation_MUs_on_three_signals.png
+│   │   ├── execution_time_three_algorithms_three_signals.png
+│   │   └── ... (other plot images)
+│   │
+│   └── README.txt
 │
 ├── gnu_radio/
 │   ├── experiment_1_clean_signals/
-│   │   ├── sobi_block.py
-│   │   ├── correlation_block.py
+│   │   ├── python_blocks/        # All Python block files used in the flowgraph
+│   │   │   ├── block1.py
+│   │   │   ├── block2.py
+│   │   │   └── ...
 │   │   └── flowgraph.png
 │   │
 │   ├── experiment_2_noisy_signals/
-│   │   ├── without_filter/
-│   │   │   ├── sobi_block.py
-│   │   │   ├── correlation_block.py
+│   │   ├── with_filter/
+│   │   │   ├── python_blocks/
+│   │   │   │   ├── block1.py
+│   │   │   │   ├── block2.py
+│   │   │   │   └── ...
 │   │   │   └── flowgraph.png
-│   │   └── with_filter/
-│   │       ├── sobi_block.py
-│   │       ├── correlation_block.py
-│   │       └── flowgraph.png
 │   │
 │   ├── experiment_3_signal_vs_noise/
 │   │   ├── without_filter/
-│   │   │   ├── sobi_block.py
+│   │   │   ├── python_blocks/
+│   │   │   │   ├── block1.py
+│   │   │   │   └── ...
 │   │   │   └── flowgraph.png
 │   │   └── with_filter/
-│   │       ├── sobi_block.py
+│   │       ├── python_blocks/
+│   │       │   ├── block1.py
+│   │       │   └── ...
 │   │       └── flowgraph.png
-│
 │
 ├── LICENSE
 └── README.md
