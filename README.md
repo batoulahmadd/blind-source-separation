@@ -14,6 +14,7 @@ Comparing three ICA algorithms for accuracy + computation time:
   - AMUSE
 
 2- Practical SDR Implementation:
+
 The selected algorithm (SOBI) was implemented on GNU Radio using Python blocks, with real-time signal separation tests:
   - Clean signals
   - Noisy signals (with / without filtering)
@@ -44,7 +45,7 @@ Blind source separation plays an important role in communication systems, biomed
 
 
 ## Repository Structure
-
+```
 bss-ica-gnu-radio/
 │
 ├── matlab_simulation/
@@ -83,6 +84,7 @@ bss-ica-gnu-radio/
 │
 ├── LICENSE
 └── README.md
+```
 
 ## How to Run MATLAB Simulations
 Open MATLAB → run desired script in matlab_simulation/scripts/
